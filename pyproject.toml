@@ -1,0 +1,89 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "xchain-sdk"
+version = "0.1.0"
+description = "Cross-chain middleware SDK for FISCO BCOS and ChainMaker (EVM-compatible)"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+authors = [
+    {name = "xchain-sdk contributors"}
+]
+keywords = ["blockchain", "cross-chain", "fisco-bcos", "chainmaker", "evm", "middleware"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = [
+    "web3>=6.0.0,<8.0.0",
+    "eth-tester[py-evm]>=0.9.1",
+    "py-evm>=0.10.0",
+    "requests>=2.28.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+    "black>=23.0",
+    "ruff>=0.1.0",
+    "mypy>=1.0",
+]
+full = [
+    "xchain-sdk[dev]",
+]
+
+[project.urls]
+Homepage = "https://github.com/yourorg/xchain-sdk"
+Documentation = "https://xchain-sdk.readthedocs.io"
+Repository = "https://github.com/yourorg/xchain-sdk"
+Issues = "https://github.com/yourorg/xchain-sdk/issues"
+
+[project.scripts]
+xchain = "xchain.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["xchain*"]
+
+[tool.setuptools.package-data]
+"xchain.contracts" = ["*.sol", "artifacts/*.json"]
+"xchain.chain" = ["start_chains.sh"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --tb=short"
+
+[tool.black]
+line-length = 100
+target-version = ["py38", "py39", "py310", "py311"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py38"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "B", "UP"]
+ignore = ["E501"]  # line too long - handled by black
+
+[tool.mypy]
+python_version = "3.8"
+ignore_missing_imports = true
+warn_unused_ignores = true
