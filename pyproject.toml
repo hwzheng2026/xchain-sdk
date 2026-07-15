@@ -59,8 +59,9 @@ package-dir = {"" = "src"}
 [tool.setuptools.packages.find]
 where = ["src"]
 include = ["xchain*"]
+# xchain_sdk.py is a thin re-export shim so `import xchain_sdk` works too.
 
-[tool.setuptools.package-data]
+[tool.setuptools.package-data] 
 "xchain.contracts" = ["*.sol", "artifacts/*.json"]
 "xchain.chain" = ["start_chains.sh"]
 
